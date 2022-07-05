@@ -5,13 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MyApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         StackPane root = new StackPane();
+
+        GridPane fieldGrid = new GridPane();
 
         // Set the title of the window
         primaryStage.setTitle("Ricky's Minesweeper Game");
@@ -27,6 +33,9 @@ public class MyApplication extends Application {
 
         // Add nodes to the root
         root.getChildren().add(button);
+
+        // Todo create field and display
+        MinesweeperField myField = new MinesweeperField(10, 8, 10);
 
         // Create a new window using the root and all it's sub-nodes
         Scene scene = new Scene(root, 480, 480);
