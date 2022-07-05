@@ -16,7 +16,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MyApplication extends Application {
-    MinesweeperField myField = new MinesweeperField(10,8,10);
+    //MinesweeperField myField = new MinesweeperField(10,8,10);
+    //MinesweeperField myField = new MinesweeperField(10,8,10);
+    MinesweeperField myField = new MinesweeperField(18,14,40);
     GridPane fieldGrid = new GridPane();
     Label informationLabel = new Label("Welcome to my minesweeper game!");
     @Override
@@ -75,7 +77,6 @@ public class MyApplication extends Application {
         Color dugColour1 = Color.web("d7b899");
         Color dugColour2 = Color.web("e5c29f");
         Color mineColour = Color.web("000000");
-        Color errorColour = Color.web("FF0000");
 
         for (int x = 0; x < myField.width; x++) {
             for (int y = 0; y < myField.height; y++) {
@@ -105,7 +106,7 @@ public class MyApplication extends Application {
                     {
                         @Override
                         public void handle(MouseEvent t) {
-                            tile.clickTile();
+                            myField.clickTile(tile.getCoord());
                             System.out.println(tile.toString());
                             if (tile.getTileType() == Tile.Type.MINE) {
                                 informationLabel.setText("YOU LOSE");

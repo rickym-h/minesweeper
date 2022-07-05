@@ -58,6 +58,47 @@ public class MinesweeperField {
 
     }
 
+    public void clickTile(CoordTuple t) {
+        tiles.get(t).clickTile();
+        if (tiles.get(t).getNumOfAdjacentMines() != 0) {
+            return;
+        }
+        // if any adjacent tiles are 0, add to set recursively.
+        Queue<Tile> BFSQueue = new LinkedList<Tile>();
+        BFSQueue.add(tiles.get(t));
+
+        Set<Tile> adjacentZeroTiles = new HashSet<Tile>();
+        while (!BFSQueue.isEmpty()) {
+            // process top node and remove from queue
+            Tile frontTile = BFSQueue.remove();
+            // get adjacent valid tiles, and add to queue
+            ArrayList<CoordTuple> surroundingTiles = getAdjacentCoords(frontTile.getCoord());
+            for (CoordTuple c : surroundingTiles) {
+                Tile currentTile = tiles.get(c);
+                if (currentTile.getVisibility()) {
+                    continue;
+                }
+                if (currentTile.getNumOfAdjacentMines() == 0) {
+                    currentTile.clickTile();
+                    BFSQueue.add(currentTile);
+                }
+            }
+            // add front tile to set.
+            adjacentZeroTiles.add(frontTile);
+        }
+
+        // for every tile in set, add all adjacent tiles to new set.
+        Set<Tile> borderTiles = new HashSet<Tile>();
+        for (Tile currentTile : adjacentZeroTiles) {
+            ArrayList<CoordTuple> coords = getAdjacentCoords(currentTile.getCoord());
+            for (CoordTuple c : coords) {
+                //borderTiles.add(tiles.get(c));
+                tiles.get(c).clickTile();
+            }
+        }
+
+    }
+
 
     public ArrayList<CoordTuple> getAdjacentCoords(CoordTuple t) {
         ArrayList<CoordTuple> outputList = new ArrayList<CoordTuple>();
