@@ -28,7 +28,6 @@ public class MinesweeperField {
             Tile currentTile = arrayListOfTiles.get(i);
             currentTile.setToMine();
 
-            // todo get adjacent tiles and increment
             ArrayList<CoordTuple> coordsOfAdjacentTiles = getAdjacentCoords(currentTile.getCoord());
             for (CoordTuple c : coordsOfAdjacentTiles) {
                 Tile t = tiles.get(c);
@@ -39,23 +38,20 @@ public class MinesweeperField {
         }
 
 
-        // todo check that every tile has a correct number assigned.
 
-        int matrix[][] = new int[height][width];
+        int[][] matrix = new int[height][width];
         for (Tile t : tiles.values()) {
             matrix[t.getY()][t.getX()] = t.getNumOfAdjacentMines();
         }
 
 
-        for (int i = 0; i < matrix.length; i++)
-        {
+        for (int[] rows : matrix) {
             // length returns number of rows
-            for (int j = 0; j < matrix[i].length; j++)
-            {
+            for (int cols : rows) {
                 // here length returns number of columns corresponding to current row
                 // using tabs for equal spaces, looks better aligned
                 // matrix[i][j] will return each element placed at row ‘i',column 'j'
-                System.out.print( matrix[i][j]  + "\t");
+                System.out.print(cols + "\t");
             }
             System.out.println();
         }

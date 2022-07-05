@@ -66,12 +66,14 @@ public class MyApplication extends Application {
         fieldGrid.getChildren().clear();
 
         int recWidth = 30;
-        recWidth = (int)(940 / myField.width) - 3;
+        recWidth = (int)(600 / myField.width) - 3;
         int recHeight = 30;
         recHeight = (int)(600 / myField.height) - 3;
 
-        Color grassColour = Color.web("00D100");
-        Color dugColour = Color.web("A0AFB7");
+        Color grassColour1 = Color.web("a2d149");
+        Color grassColour2 = Color.web("aad751");
+        Color dugColour1 = Color.web("d7b899");
+        Color dugColour2 = Color.web("e5c29f");
         Color mineColour = Color.web("000000");
         Color errorColour = Color.web("FF0000");
 
@@ -84,13 +86,21 @@ public class MyApplication extends Application {
                 Tile tile = myField.tiles.get(coord);
 
                 if (tile.getVisibility()) {
-                    rectangle.setFill(dugColour);
+                    if ((tile.getX()+tile.getY()) % 2 == 0) {
+                        rectangle.setFill(dugColour2);
+                    } else {
+                        rectangle.setFill(dugColour1);
+                    }
                     tileLabel.setText(String.valueOf(tile.getNumOfAdjacentMines()));
                     if (tile.getTileType() == Tile.Type.MINE) {
                         rectangle.setFill(mineColour);
                     }
                 } else {
-                    rectangle.setFill(grassColour);
+                    if ((tile.getX()+tile.getY()) % 2 == 0) {
+                        rectangle.setFill(grassColour2);
+                    } else {
+                        rectangle.setFill(grassColour1);
+                    }
                     rectangle.setOnMouseClicked(new EventHandler<MouseEvent>()
                     {
                         @Override
