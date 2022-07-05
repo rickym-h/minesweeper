@@ -35,7 +35,14 @@ public class MyApplication extends Application {
         root.getChildren().add(button);
 
         // Todo create field and display
-        MinesweeperField myField = new MinesweeperField(10, 8, 10);
+        MinesweeperField myField = new MinesweeperField(3, 3, 1);
+
+//        for (int i = 0; i < 5; i++) {
+//            for (int j = 0; j < 5; j++) {
+//                Tile myTile = myField.tiles.get(new CoordTuple(i, j));
+//                System.out.println(String.valueOf(i) + String.valueOf(j) + "-" + String.valueOf(myTile.numOfAdjacentMines));
+//            }
+//        }
 
         // Create a new window using the root and all it's sub-nodes
         Scene scene = new Scene(root, 480, 480);
