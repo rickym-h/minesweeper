@@ -35,6 +35,8 @@ public class MyApplication extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Clicked!");
+                myField = new MinesweeperField(18,14,40);
+                updateFieldGrid();
             }
         });
 

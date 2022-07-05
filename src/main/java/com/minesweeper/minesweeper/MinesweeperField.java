@@ -31,7 +31,6 @@ public class MinesweeperField {
             ArrayList<CoordTuple> coordsOfAdjacentTiles = getAdjacentCoords(currentTile.getCoord());
             for (CoordTuple c : coordsOfAdjacentTiles) {
                 Tile t = tiles.get(c);
-                //System.out.println(t);
                 t.incrementNumOfAdjacentMines();
             }
 
@@ -44,8 +43,8 @@ public class MinesweeperField {
             matrix[t.getY()][t.getX()] = t.getNumOfAdjacentMines();
         }
 
-
-        for (int[] rows : matrix) {
+        for (int row = matrix.length-1; row>=0; row--) {
+            int[] rows = matrix[row];
             // length returns number of rows
             for (int cols : rows) {
                 // here length returns number of columns corresponding to current row
@@ -88,11 +87,9 @@ public class MinesweeperField {
         }
 
         // for every tile in set, add all adjacent tiles to new set.
-        Set<Tile> borderTiles = new HashSet<Tile>();
         for (Tile currentTile : adjacentZeroTiles) {
             ArrayList<CoordTuple> coords = getAdjacentCoords(currentTile.getCoord());
             for (CoordTuple c : coords) {
-                //borderTiles.add(tiles.get(c));
                 tiles.get(c).clickTile();
             }
         }
