@@ -5,12 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,6 +19,11 @@ public class MyApplication extends Application {
     MinesweeperField myField = new MinesweeperField(18,14,40);
     GridPane fieldGrid = new GridPane();
     Label informationLabel = new Label("Welcome to my minesweeper game!");
+    ComboBox<String> difficultyComboBox = new ComboBox<String>();
+
+    boolean gameOver = false;
+
+
     @Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
@@ -34,21 +37,36 @@ public class MyApplication extends Application {
         button.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Clicked!");
-                myField = new MinesweeperField(18,14,40);
+
+                String value = (String) difficultyComboBox.getValue();
+                System.out.println(value);
+                switch (value) {
+                    case "Easy" -> myField = new MinesweeperField(10, 8, 10);
+                    case "Medium" -> myField = new MinesweeperField(18, 14, 40);
+                    case "Hard" -> myField = new MinesweeperField(24, 20, 99);
+                    default -> {
+                        informationLabel.setText("Please use the dropdown menu to enter a valid difficulty!");
+                        return;
+                    }
+                }
                 updateFieldGrid();
+                gameOver = false;
             }
         });
 
-
-
-        // Todo create field and display
-
         updateFieldGrid();
 
+        HBox newGamePane = new HBox();
 
+
+
+        difficultyComboBox.getItems().add("Easy");
+        difficultyComboBox.getItems().add("Medium");
+        difficultyComboBox.getItems().add("Hard");
+
+        newGamePane.getChildren().addAll(difficultyComboBox, button);
         // Add nodes to the root
-        root.setTop(button);
+        root.setTop(newGamePane);
         root.setCenter(fieldGrid);
         root.setBottom(informationLabel);
 
@@ -66,7 +84,6 @@ public class MyApplication extends Application {
     }
 
     public void updateFieldGrid() {
-        // todo update the grid. should be called every time a rectangle is clicked.
         fieldGrid.getChildren().clear();
 
         int recWidth = 30;
@@ -108,10 +125,14 @@ public class MyApplication extends Application {
                     {
                         @Override
                         public void handle(MouseEvent t) {
+                            if (gameOver) {
+                                return;
+                            }
                             myField.clickTile(tile.getCoord());
                             System.out.println(tile.toString());
                             if (tile.getTileType() == Tile.Type.MINE) {
                                 informationLabel.setText("YOU LOSE");
+                                gameOver = true;
                             }
                             updateFieldGrid();
                         }
