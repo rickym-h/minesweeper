@@ -17,10 +17,6 @@ public class MinesweeperField {
                 Tile myTile = new Tile(x, y);
                 CoordTuple t = new CoordTuple(x, y);
                 tiles.put(t, myTile);
-                System.out.println(myTile);
-                CoordTuple t1 = new CoordTuple(x, y);
-                System.out.println(tiles.get(t1));
-                //System.out.println(myTile);
             }
         }
         System.out.println("finished placing in hashmap");
@@ -35,16 +31,34 @@ public class MinesweeperField {
             // todo get adjacent tiles and increment
             ArrayList<CoordTuple> coordsOfAdjacentTiles = getAdjacentCoords(currentTile.getCoord());
             for (CoordTuple c : coordsOfAdjacentTiles) {
-                //System.out.println(c.toString());
                 Tile t = tiles.get(c);
                 //System.out.println(t);
-                //t.incrementNumOfAdjacentMines();
+                t.incrementNumOfAdjacentMines();
             }
 
         }
 
 
         // todo check that every tile has a correct number assigned.
+
+        int matrix[][] = new int[height][width];
+        for (Tile t : tiles.values()) {
+            matrix[t.getY()][t.getX()] = t.getNumOfAdjacentMines();
+        }
+
+
+        for (int i = 0; i < matrix.length; i++)
+        {
+            // length returns number of rows
+            for (int j = 0; j < matrix[i].length; j++)
+            {
+                // here length returns number of columns corresponding to current row
+                // using tabs for equal spaces, looks better aligned
+                // matrix[i][j] will return each element placed at row ‘i',column 'j'
+                System.out.print( matrix[i][j]  + "\t");
+            }
+            System.out.println();
+        }
 
     }
 

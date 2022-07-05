@@ -8,10 +8,19 @@ public class Tile {
     private Type tileType;
     private final int x;
     private final int y;
+    private boolean isVisible = false;
 
-    // todo add a bool to show if the tile is shown or not. make toggleable
+    public void clickTile() {
+        isVisible = true;
 
-    // todo add slot to show number on tile
+        // todo if this tile is a '0' tile, also show all adjacent '0' tiles.
+    }
+
+    public boolean getVisibility() {
+        return isVisible;
+    }
+
+    private int numOfAdjacentMines = 0;
 
 
     public Tile(int x, int y) {
@@ -34,6 +43,25 @@ public class Tile {
 
     public void setToMine() {
         this.tileType = Type.MINE;
+        this.numOfAdjacentMines = -1;
+    }
+
+    public int getNumOfAdjacentMines() {
+        return numOfAdjacentMines;
+    }
+
+    public void incrementNumOfAdjacentMines() {
+        if (this.tileType != Type.MINE) {
+            this.numOfAdjacentMines++;
+        }
+    }
+
+    public CoordTuple getCoord() {
+        return new CoordTuple(this.x, this.y);
+    }
+
+    public String toString() {
+        return "X["+x+"] Y["+y+"] numOfAdjacent["+numOfAdjacentMines+"]";
     }
 
 }
