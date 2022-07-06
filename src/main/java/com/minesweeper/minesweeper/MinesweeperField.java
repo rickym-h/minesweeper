@@ -55,6 +55,18 @@ public class MinesweeperField {
             System.out.println();
         }
 
+
+
+        // Start with one tile dug up
+        ArrayList<Tile> foo = new ArrayList<Tile>(tiles.values());
+        Collections.shuffle(foo);
+        for (Tile t : foo) {
+            if (t.getNumOfAdjacentMines() == 0) {
+                clickTile(t.getCoord());
+                break;
+            }
+        }
+
     }
 
     public void clickTile(CoordTuple t) {
@@ -125,6 +137,12 @@ public class MinesweeperField {
             }
         }
         System.out.println("GAME WON! CONGRATS!");
+
+        for (Tile tile : tiles.values()) {
+            if (tile.getTileType() == Tile.Type.GRASS) {
+                tile.toggleMarked();
+            }
+        }
         return true;
     }
 }

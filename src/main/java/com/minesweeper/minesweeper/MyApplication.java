@@ -3,6 +3,7 @@ package com.minesweeper.minesweeper;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,7 +29,9 @@ public class MyApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
+        HBox topRoot = new HBox();
+        topRoot.setAlignment(Pos.CENTER);
+        VBox root = new VBox();
 
 
         // Set the title of the window
@@ -68,12 +71,15 @@ public class MyApplication extends Application {
 
         newGamePane.getChildren().addAll(difficultyComboBox, button);
         // Add nodes to the root
-        root.setTop(newGamePane);
-        root.setCenter(fieldGrid);
-        root.setBottom(informationLabel);
+        root.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(newGamePane,fieldGrid,informationLabel);
+        //root.setTop(newGamePane);
+        //root.setCenter(fieldGrid);
+        //root.setBottom(informationLabel);
 
         // Create a new window using the root and all it's sub-nodes
-        Scene scene = new Scene(root, 960, 720);
+        topRoot.getChildren().add(root);
+        Scene scene = new Scene(topRoot, 960, 720);
 
         // Set scene and show the window
         primaryStage.setResizable(false);
@@ -141,14 +147,19 @@ public class MyApplication extends Application {
                             System.out.println(tile.toString());
                             if (tile.getTileType() == Tile.Type.MINE) {
                                 informationLabel.setText("YOU LOSE");
+                                for (Tile tile : myField.tiles.values()) {
+                                    if (tile.getTileType() == Tile.Type.MINE) {
+                                        tile.clickTile();
+                                    }
+                                }
                                 gameOver = true;
                             }
-                            updateFieldGrid();
 
                             if (myField.isWon()) {
                                 informationLabel.setText("YOU WIN!");
                                 gameOver = true;
                             }
+                            updateFieldGrid();
                         }
                     });
                 }
