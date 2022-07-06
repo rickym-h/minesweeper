@@ -118,4 +118,13 @@ public class MinesweeperField {
         return outputList;
     }
 
+    public boolean isWon() {
+        for (Tile tile : tiles.values()) {
+            if ((tile.getTileType() == Tile.Type.GRASS) && (!tile.getVisibility())) {
+                return false;
+            }
+        }
+        System.out.println("GAME WON! CONGRATS!");
+        return true;
+    }
 }

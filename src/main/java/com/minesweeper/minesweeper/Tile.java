@@ -22,7 +22,6 @@ public class Tile {
     public void clickTile() {
         isVisible = true;
 
-        // todo if this tile is a '0' tile, also show all adjacent '0' tiles.
     }
 
     public boolean getVisibility() {

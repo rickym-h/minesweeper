@@ -133,7 +133,6 @@ public class MyApplication extends Application {
                                 return;
                             }
                             if (t.getButton() == MouseButton.SECONDARY) {
-                                // todo code for marking a mine
                                 tile.toggleMarked();
                                 updateFieldGrid();
                                 return;
@@ -145,6 +144,11 @@ public class MyApplication extends Application {
                                 gameOver = true;
                             }
                             updateFieldGrid();
+
+                            if (myField.isWon()) {
+                                informationLabel.setText("YOU WIN!");
+                                gameOver = true;
+                            }
                         }
                     });
                 }
