@@ -11,6 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -95,6 +96,7 @@ public class MyApplication extends Application {
         Color dugColour1 = Color.web("d7b899");
         Color dugColour2 = Color.web("e5c29f");
         Color mineColour = Color.web("000000");
+        Color markColour = Color.web("FF0000");
 
         for (int x = 0; x < myField.width; x++) {
             for (int y = 0; y < myField.height; y++) {
@@ -132,7 +134,7 @@ public class MyApplication extends Application {
                             }
                             if (t.getButton() == MouseButton.SECONDARY) {
                                 // todo code for marking a mine
-                                tile.markTile();
+                                tile.toggleMarked();
                                 updateFieldGrid();
                                 return;
                             }
@@ -148,9 +150,15 @@ public class MyApplication extends Application {
                 }
 
 
+                if (tile.isMarked() && !tile.getVisibility()) {
+                    Circle circleMark = new Circle(5);
+                    circleMark.setFill(markColour);
+                    tilePane.getChildren().addAll(rectangle, circleMark);
+                } else {
+                    tilePane.getChildren().addAll(rectangle, tileLabel);
+                }
 
 
-                tilePane.getChildren().addAll(rectangle, tileLabel);
                 fieldGrid.add(tilePane, x, myField.height - y);
             }
         }

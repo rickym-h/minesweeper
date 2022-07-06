@@ -11,8 +11,8 @@ public class Tile {
     private boolean isVisible = false;
     private boolean isMarked = false;
 
-    public void markTile() {
-        isMarked = true;
+    public void toggleMarked() {
+        isMarked = !isMarked;
     }
 
     public boolean isMarked() {
