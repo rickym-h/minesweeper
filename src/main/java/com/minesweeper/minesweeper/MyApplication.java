@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -86,10 +87,8 @@ public class MyApplication extends Application {
     public void updateFieldGrid() {
         fieldGrid.getChildren().clear();
 
-        int recWidth = 30;
-        recWidth = (int)(600 / myField.width) - 3;
-        int recHeight = 30;
-        recHeight = (int)(600 / myField.height) - 3;
+        int recWidth = (600 / myField.width) - 3;
+        int recHeight = (600 / myField.height) - 3;
 
         Color grassColour1 = Color.web("a2d149");
         Color grassColour2 = Color.web("aad751");
@@ -111,7 +110,9 @@ public class MyApplication extends Application {
                     } else {
                         rectangle.setFill(dugColour1);
                     }
-                    tileLabel.setText(String.valueOf(tile.getNumOfAdjacentMines()));
+                    if (tile.getNumOfAdjacentMines()>0) {
+                        tileLabel.setText(String.valueOf(tile.getNumOfAdjacentMines()));
+                    }
                     if (tile.getTileType() == Tile.Type.MINE) {
                         rectangle.setFill(mineColour);
                     }
@@ -125,7 +126,14 @@ public class MyApplication extends Application {
                     {
                         @Override
                         public void handle(MouseEvent t) {
+                            System.out.println(t);
                             if (gameOver) {
+                                return;
+                            }
+                            if (t.getButton() == MouseButton.SECONDARY) {
+                                // todo code for marking a mine
+                                tile.markTile();
+                                updateFieldGrid();
                                 return;
                             }
                             myField.clickTile(tile.getCoord());
@@ -146,6 +154,5 @@ public class MyApplication extends Application {
                 fieldGrid.add(tilePane, x, myField.height - y);
             }
         }
-        return;
     }
 }

@@ -9,6 +9,15 @@ public class Tile {
     private final int x;
     private final int y;
     private boolean isVisible = false;
+    private boolean isMarked = false;
+
+    public void markTile() {
+        isMarked = true;
+    }
+
+    public boolean isMarked() {
+        return isMarked;
+    }
 
     public void clickTile() {
         isVisible = true;
