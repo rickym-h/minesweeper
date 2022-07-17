@@ -56,6 +56,7 @@ public class MyApplication extends Application {
                 }
                 updateFieldGrid();
                 gameOver = false;
+                informationLabel.setText("Welcome to my minesweeper game!");
             }
         });
 
