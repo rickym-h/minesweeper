@@ -8,16 +8,20 @@ public class CoordTuple {
         this.y = y;
     }
 
+    // Gets string rep of the coord
     public String toString() {
         return "X[" + String.valueOf(x) + "]   Y[" + String.valueOf(y)+"]";
     }
 
+    // Custom hashcode for the coords - makes easier for using in a queue implementation for the BFS
     @Override
     public int hashCode()
     {
         return 31 * ((31 * String.valueOf(x).hashCode()) + String.valueOf(y).hashCode());
     }
 
+    // Checks whether coords care equal by value instead of by object so coords representing the same position are
+    // determined to be equal
     @Override
     public boolean equals(Object o) {
 

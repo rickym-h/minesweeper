@@ -69,6 +69,8 @@ public class MinesweeperField {
 
     }
 
+    // Process the events that take place when clicking a tile.
+    // Checks if cell is a mine, and if not will mark as many cells necessary as non-mines using a BFS.
     public void clickTile(CoordTuple t) {
         tiles.get(t).clickTile();
         if (tiles.get(t).getNumOfAdjacentMines() != 0) {
@@ -109,6 +111,8 @@ public class MinesweeperField {
     }
 
 
+    // Gets all 8 adjacent coords when given a cell coord. Accounts for edge and corner cases where less coords should
+    // be returned.
     public ArrayList<CoordTuple> getAdjacentCoords(CoordTuple t) {
         ArrayList<CoordTuple> outputList = new ArrayList<CoordTuple>();
         for (int x = t.x-1; x <= t.x+1; x++) {
@@ -130,6 +134,7 @@ public class MinesweeperField {
         return outputList;
     }
 
+    // Checks whether the game represented by this MinesweeperField is won or not
     public boolean isWon() {
         for (Tile tile : tiles.values()) {
             if ((tile.getTileType() == Tile.Type.GRASS) && (!tile.getVisibility())) {
@@ -138,6 +143,8 @@ public class MinesweeperField {
         }
         System.out.println("GAME WON! CONGRATS!");
 
+        // If won - will set all the un-clicked mine cells to mines (to make more clear that the only cells left
+        // un-clicked were mines
         for (Tile tile : tiles.values()) {
             if (tile.getTileType() == Tile.Type.GRASS) {
                 tile.toggleMarked();
